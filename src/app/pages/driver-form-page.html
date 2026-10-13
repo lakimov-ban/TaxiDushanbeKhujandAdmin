@@ -1,0 +1,91 @@
+<app-page-header [heading]="heading()" backLink="/drivers" />
+<div class="page-body">
+  <form class="page-content" [formGroup]="form" (ngSubmit)="save()">
+    <div class="columns">
+      <section class="panel" aria-labelledby="driver-title">
+        <h2 id="driver-title" class="panel-label">Водитель</h2>
+        <label class="form-field">
+          <span>ФИО</span>
+          <input class="input" formControlName="name" placeholder="Рахимов Фирдавс" autocomplete="off" />
+        </label>
+        <label class="form-field">
+          <span>Телефон</span>
+          <input class="input" type="tel" formControlName="phone" placeholder="+992 90 000 00 00" autocomplete="off" />
+        </label>
+      </section>
+
+      <section class="panel" aria-labelledby="car-title">
+        <h2 id="car-title" class="panel-label">Автомобиль</h2>
+        <label class="form-field">
+          <span>Марка и модель</span>
+          <input class="input" formControlName="car" placeholder="Toyota Camry" autocomplete="off" />
+        </label>
+        <label class="form-field">
+          <span>Госномер</span>
+          <input class="input" formControlName="plate" placeholder="0123 AB 01" autocomplete="off" />
+        </label>
+        <fieldset class="form-field">
+          <legend class="form-legend">Класс</legend>
+          <div class="chips">
+            @for (c of classes; track c) {
+              <button
+                type="button"
+                class="chip soft"
+                [attr.aria-pressed]="form.controls.cls.value === c"
+                (click)="form.controls.cls.setValue(c)"
+              >
+                {{ c }}
+              </button>
+            }
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="panel" aria-labelledby="extras-title">
+        <h2 id="extras-title" class="panel-label">Наценки и доплаты</h2>
+        @for (e of extras; track e.key) {
+          <label class="form-field">
+            <span>{{ e.label }}</span>
+            <span class="input-unit">
+              <input class="input" type="number" min="0" [formControlName]="e.key" />
+              <span>{{ e.unit }}</span>
+            </span>
+          </label>
+        }
+      </section>
+
+      <section class="panel wide" aria-labelledby="routes-title" formArrayName="routes">
+        <h2 id="routes-title" class="panel-label">Стоимость по направлениям</h2>
+        @for (r of routes.controls; track r; let i = $index) {
+          <div class="route-row" [formGroupName]="i" role="group" [attr.aria-label]="'Направление ' + (i + 1)">
+            <select class="input" formControlName="from" aria-label="Откуда">
+              @for (city of cityNames(); track city) {
+                <option [value]="city">{{ city }}</option>
+              }
+            </select>
+            <span class="muted" aria-hidden="true">→</span>
+            <select class="input" formControlName="to" aria-label="Куда">
+              @for (city of cityNames(); track city) {
+                <option [value]="city">{{ city }}</option>
+              }
+            </select>
+            <span class="input-unit">
+              <input class="input" type="number" min="0" formControlName="price" placeholder="Цена" aria-label="Цена" />
+              <span>сом.</span>
+            </span>
+            <button type="button" class="round-btn danger" aria-label="Удалить направление" (click)="removeRoute(i)">×</button>
+          </div>
+        }
+        <button type="button" class="btn add-route" (click)="addRoute()">+ Добавить направление</button>
+      </section>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-dark" [disabled]="form.invalid">Сохранить</button>
+      <a class="btn" routerLink="/drivers">Отмена</a>
+      @if (form.invalid) {
+        <p class="sub hint">Заполните ФИО, марку и госномер.</p>
+      }
+    </div>
+  </form>
+</div>

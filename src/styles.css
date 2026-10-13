@@ -1,3 +1,426 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "tailwindcss";
+
+:root {
+  --ink: #1b1a17;
+  --ink-hover: #33302a;
+  --paper: #f6f3ec;
+  --card: #ffffff;
+  --sand: #e9e3d3;
+  --sand-hover: #dfd7c2;
+  --line: #f0ebdd;
+  --accent: #f2b705;
+  --accent-hover: #e0a800;
+  --accent-soft: #f8e3a0;
+  --accent-pale: #fbf3d0;
+  --muted: #5e5a50;
+  --disabled: #d2cbb8;
+  --disabled-ink: #6b6759;
+  --danger-soft: #f0cfc6;
+  --gutter: 32px;
+
+  color-scheme: light;
+}
+
+@media (max-width: 859px) {
+  :root {
+    --gutter: 16px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Onest', system-ui, sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Заголовок страницы получает фокус программно при навигации — рамка там не нужна. */
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.strong {
+  font-weight: 700;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Страница раздела: шапка сверху, прокручиваемое тело ниже. */
+.page {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px var(--gutter) var(--gutter);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 1280px;
+}
+
+.card {
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.panel-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.kv {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.kv dt {
+  color: var(--muted);
+}
+
+.kv dd {
+  margin: 0;
+  text-align: right;
+}
+
+.divider {
+  height: 1px;
+  background: var(--line);
+}
+
+.pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip.soft {
+  background: var(--paper);
+}
+
+.chip:hover {
+  background: var(--accent-soft);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.chip.accent[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--sand);
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--sand-hover);
+}
+
+.btn-dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-dark:hover {
+  background: var(--ink-hover);
+}
+
+.btn-accent {
+  background: var(--accent);
+}
+
+.btn-accent:hover {
+  background: var(--accent-hover);
+}
+
+.btn:disabled {
+  background: var(--disabled);
+  color: var(--disabled-ink);
+  cursor: default;
+}
+
+.btn-sm {
+  display: inline-block;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--sand);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-sm:hover {
+  background: var(--accent);
+}
+
+.round-btn {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sand);
+  font-size: 18px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.round-btn:hover {
+  background: var(--accent);
+}
+
+.round-btn.danger:hover {
+  background: var(--danger-soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--sand);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Поля форм */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.form-field > span:first-child,
+.form-legend {
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  height: 50px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--paper);
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+select.input {
+  padding: 0 12px;
+  font-size: 16px;
+}
+
+.input-unit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-unit > span {
+  flex: none;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+fieldset.form-field {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.form-legend {
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+/* Таблицы-справочники */
+.table-card {
+  overflow-x: auto;
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.data-table th {
+  padding: 14px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 14px 10px;
+  border-top: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+.data-table th:first-child,
+.data-table td:first-child {
+  padding-left: 20px;
+}
+
+.data-table th:last-child,
+.data-table td:last-child {
+  padding-right: 20px;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 24px;
+  color: var(--muted);
+  text-align: center;
+}
